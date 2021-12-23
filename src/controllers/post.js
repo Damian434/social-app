@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 
-exports.getPost = async (req, res, next) => {
+exports.getPosts = async (req, res, next) => {
   try {
     const posts = await Post.find();
     return res.status(200).json({
@@ -13,7 +13,6 @@ exports.getPost = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   const content = req.body.content;
-
   try {
     const post = new Post({
       content: content,
@@ -27,3 +26,5 @@ exports.createPost = async (req, res, next) => {
     if (err) next(err);
   }
 };
+
+
