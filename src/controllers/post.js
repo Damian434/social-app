@@ -1,6 +1,20 @@
 const Post = require('../models/post');
 
-exports.getPosts = async (req, res, next) => {
+
+exports.getOnePost = async(req, res, next) => {
+  let id = req.params.id;
+  try {
+    let post = await Post.findById(id);
+    return res.status(200).json({
+      post: post,
+    });
+  } catch (err) {
+    if(err) next(err);
+  }
+}
+
+
+exports.getAllPosts = async (req, res, next) => {
   try {
     const posts = await Post.find();
     return res.status(200).json({
@@ -26,5 +40,16 @@ exports.createPost = async (req, res, next) => {
     if (err) next(err);
   }
 };
+
+exports.deleteAllPosts = async(req, res, next) => {
+  try {
+    await Post.deleteMany({});
+    return res.status(200).json({
+      message: 'Every post has been deleted.'
+    })
+  } catch (err) {
+    next();
+  }
+}
 
 
